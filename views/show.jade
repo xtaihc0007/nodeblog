@@ -1,0 +1,55 @@
+extends layout
+
+block content
+
+    .post
+        h1=post.title
+        ul.errors
+            if errors
+                each error, i in errors
+                    li.alert.alert-danger #{error.msg}
+        p.meta Posted in
+            a(href='/posts/show/#{post.category}') #{post.category}
+            by
+            #{post.author} on #{moment(post.date).format("MM-DD-YYYY")}
+        img(src='/images/#{post.mainimage}')
+        !=post.body
+
+        br
+        hr
+        if post.comments
+            h3 Comments
+            each comment, i in post.comments
+                .comment
+                    p.comment-name #{comment.name} :
+                    p.comment-body #{comment.body}
+                    hr
+
+        h3 Add Comment
+        if errors
+            ul.errors
+                each error, i in errors
+                    li.alert.alert-danger #{error.msg}
+        form.comment-form(method='post', action='/posts/addcomment')
+            input(name='postid', type='hidden', value='#{post._id}')
+            if(user)
+                .form-group
+                    label Name
+                    input.form-control(type='text', name='name', value='#{user.username}', readonly='true')
+            else
+                .form-group
+                    label Name
+                    input.form-control(type='text', name='name')
+            if(user)
+                .form-group
+                    label Email
+                    input.form-control(type='text', name='email', value='#{user.email}', readonly='true')
+            else
+                .form-group
+                    label Email
+                    input.form-control(type='text', name='email')
+            .form-group
+                label Body
+                textarea.form-control(type='text', name='body')
+            br
+            input.btn.btn-default(type='submit', name='submit',value='Add Comment')
