@@ -14,7 +14,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var mongo = require('mongodb');
-var db = require('monk')('localhost/nodeblog');
+var db = require('monk')('13.84.148.136/nodeblog');
 
 var routes = require('./routes/index');
 var posts = require('./routes/posts');

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
-var db = require('monk')('localhost/nodeblog');
+var db = require('monk')('13.84.148.136/nodeblog');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
