@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
-var db = require('monk')('localhost/nodeblog');
+var db = require('monk')('botest1883.cloudapp.net/nodeblog');
 
 
 router.get('/show/:category', function(req, res, next) {
