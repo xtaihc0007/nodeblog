@@ -12,9 +12,9 @@ var moment = require('moment');
 var expressValidator = require('express-validator');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
+var azure = require('azure-storage');
 var mongo = require('mongodb');
-var db = require('monk')('13.84.148.136/nodeblog');
+var db = require('monk')('botest1883.cloudapp.net/nodeblog');
 
 var routes = require('./routes/index');
 var posts = require('./routes/posts');

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('mongodb');
-var db = require('monk')('13.84.148.136/nodeblog');
+var db = require('monk')('botest1883.cloudapp.net/nodeblog');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt= require('bcryptjs');

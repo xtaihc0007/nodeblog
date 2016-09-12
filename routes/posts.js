@@ -3,9 +3,9 @@ var router = express.Router();
 var multer = require('multer');
 var upload = multer({ dest: './public/images' });
 var mongo = require('mongodb');
-var db = require('monk')('13.84.148.136/nodeblog');
+var db = require('monk')('botest1883.cloudapp.net/nodeblog');
 var bcrypt= require('bcryptjs');
-
+var azure = require('azure-storage');
 
 /* GET users listing. */
 router.get('/add', function(req, res, next) {
@@ -106,7 +106,6 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
     var category= req.body.category;
     var body= req.body.body;
     var date= new Date();
-    console.log(category);
     if(req.file){
         var mainimage= req.file.filename;
     }else {
@@ -121,7 +120,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
     var errors= req.validationErrors();
     if(errors){
         var categories= db.get('categories');
-        categories.find({},{},function (err, categories) {
+        categories.find({},{},function (errors, categories) {
             res.render('addpost',{
                 'errors':errors,
                 'title':"add post",
@@ -130,23 +129,33 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
         });
 
     }else {
-        var posts= db.get('posts');
-        posts.insert({
-            'title':title,
-            'body':body,
-            'category':category,
-            'date':date,
-            'author':author,
-            'mainimage':mainimage
-        },function (err,post) {
-            if(err){
-                res.send(err);
-            }else {
-                req.flash('success','post added.');
-                res.location('/');
-                res.redirect('/');
-            }
-        });
+          //  console.log(req.file);
+        //var bs = azure.createBlobService('storage0009','kuGlOb5PsLB90b2wJkqIHqKpT0+nIkbbp7pIlx6x5w4lsbmZU+Tz1lsl0Mi1lqwIe+FHufO/tpZTNyCFRPgvaA==');
+        //bs.createBlockBlobFromLocalFile ('containernodejs', req.file.originalname, req.file.path, function(error, result, response){
+        //if(error) throw error;
+           // console.log(bs.host.primaryHost);
+            //console.log(result);
+            var posts= db.get('posts');
+            posts.insert({
+                'title':title,
+                'body':body,
+                'category':category,
+                'date':date,
+                'author':author,
+                'mainimage':mainimage
+            },function (err,post) {
+                if(err){
+                    res.send(err);
+                }else {
+                    req.flash('success','post added.');
+                    res.location('/');
+                    res.redirect('/');
+                }
+            });
+
+       // });
+
+        
     }
 })
 
