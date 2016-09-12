@@ -14,6 +14,6 @@ block content
           | on #{moment(post.date).format("MM-DD-YYYY")}&nbsp
 
 
-        img(src='/images/#{post.mainimage}')
+        img(src='#{post.mainimage}')
         != truncateText(post.body,300)
         a.more(href='posts/show/#{post._id}') Read More

@@ -143,12 +143,12 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
         });
 
     }else {
-          //  console.log(req.file);
-        //var bs = azure.createBlobService('storage0009','kuGlOb5PsLB90b2wJkqIHqKpT0+nIkbbp7pIlx6x5w4lsbmZU+Tz1lsl0Mi1lqwIe+FHufO/tpZTNyCFRPgvaA==');
-        //bs.createBlockBlobFromLocalFile ('containernodejs', req.file.originalname, req.file.path, function(error, result, response){
-        //if(error) throw error;
-           // console.log(bs.host.primaryHost);
-            //console.log(result);
+        console.log(req.file);
+        var bs = azure.createBlobService('storage0009','kuGlOb5PsLB90b2wJkqIHqKpT0+nIkbbp7pIlx6x5w4lsbmZU+Tz1lsl0Mi1lqwIe+FHufO/tpZTNyCFRPgvaA==');
+        bs.createBlockBlobFromLocalFile ('containernodejs', req.file.filename, req.file.path, function(error, result, response){
+        if(error) throw error;
+           console.log(bs.host.primaryHost);
+            console.log(result);
             var posts= db.get('posts');
             posts.insert({
                 'title':title,
@@ -156,7 +156,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                 'category':category,
                 'date':date,
                 'author':author,
-                'mainimage':mainimage
+                'mainimage':bs.host.primaryHost+'containernodejs/'+req.file.filename
             },function (err,post) {
                 if(err){
                     res.send(err);
@@ -167,7 +167,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                 }
             });
 
-       // });
+        });
 
         
     }
