@@ -6,7 +6,7 @@ var db = require('monk')('botest1883.cloudapp.net/nodeblog');
 
 router.get('/show/:category', function(req, res, next) {
     var posts= db.get('posts');
-    posts.find({category:req.params.category},{},function (err, posts) {
+    posts.find({category:req.params.category},{sort : { date : -1 }},function (err, posts) {
         res.render('index',{
 
             'title': req.params.category,

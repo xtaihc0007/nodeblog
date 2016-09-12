@@ -47,7 +47,7 @@ router.get('/show/:id', function(req, res, next) {
 
 router.get('/display/:author',function (req, res, next) {
     var posts= db.get('posts');
-    posts.find({author:req.params.author},{},function (err, posts) {
+    posts.find({author:req.params.author},{sort : { date : -1 }},function (err, posts) {
         res.render('index',{
             'title': req.params.username,
             'posts':posts
@@ -156,7 +156,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
 
             });
         }else{
-                mainimage= bs.host.primaryHost+'containernodejs/noimage.jpg';
+                mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
 
         }
        

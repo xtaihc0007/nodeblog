@@ -7,7 +7,7 @@ var db = require('monk')('botest1883.cloudapp.net/nodeblog');
 router.get('/', function(req, res, next) {
   var db= req.db;
   var posts= db.get('posts');
-  posts.find({},{},function (err, posts) {
+  posts.find({},{sort : { date : -1 }},function (err, posts) {
     res.render('index', { posts: posts });
   })
 
