@@ -22,7 +22,7 @@ block content
             textarea.form-control(name='body', id='body')
         .form-group
             label Main Image:
-            input.form-control(name='mainimage', type='file')
+            input.form-control(name='mainimage', type='file',accept="application/x-zip-compressed,image/*")
         input.btn.btn-default(name='submit',type='submit',value='Save')
         script(src='/ckeditor/ckeditor.js')
         script
