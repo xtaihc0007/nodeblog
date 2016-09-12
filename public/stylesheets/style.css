@@ -18,7 +18,8 @@ body {
 	border-top: #83cd39 3px solid;
 }
 .post img{
-	width: 100%;
+	width: 90%;
+	height: 500px;
 }
 .clr{
 	clear: both;

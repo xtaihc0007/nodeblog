@@ -8,11 +8,13 @@ block content
             if errors
                 each error, i in errors
                     li.alert.alert-danger #{error.msg}
-        p.meta Posted in
-            a(href='/posts/show/#{post.category}') #{post.category}
-            by
-            #{post.author} on #{moment(post.date).format("MM-DD-YYYY")}
-        img(src='/images/#{post.mainimage}')
+        p.meta Posted in&nbsp
+            a(href='/categories/show/#{post.category}') #{post.category}&nbsp
+            | by&nbsp
+            a(href='/posts/display/#{post.author}') #{post.author}&nbsp
+            | on #{moment(post.date).format("MM-DD-YYYY")}&nbsp
+
+        img(src='#{post.mainimage}')
         !=post.body
 
         br
@@ -21,7 +23,8 @@ block content
             h3 Comments
             each comment, i in post.comments
                 .comment
-                    p.comment-name #{comment.name} :
+                    p.comment-name #{comment.name} (#{moment(comment.commentdate).format("MM-DD-HH:mm")}):
+
                     p.comment-body #{comment.body}
                     hr
 
