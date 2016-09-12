@@ -152,15 +152,17 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                console.log(bs.host.primaryHost);
                 console.log(result);
                 mainimage= bs.host.primaryHost+'containernodejs/'+req.file.filename;
+                 saveNoImage(title,body,category,date,author,mainimage,req,res);
                 
 
             });
         }else{
                 mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
+                 saveNoImage(title,body,category,date,author,mainimage,req,res);
 
         }
        
-        saveNoImage(title,body,category,date,author,mainimage,req,res);
+       
         
     }
 })
