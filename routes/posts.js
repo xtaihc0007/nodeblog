@@ -202,7 +202,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
         
     }
 })
-
+ 
 function saveNoImage(title,body,category,date,author,mainimage,req,res,next)
 {
     var posts= db.get('posts');
