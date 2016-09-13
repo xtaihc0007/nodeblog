@@ -134,7 +134,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
     var errors= req.validationErrors();
     if(errors){
         var categories= db.get('categories');
-        categories.find({},{},function (err, categories) {
+        categories.find({},{},function (errors, categories) {
             res.render('addpost',{
                 'errors':errors,
                 'title':"add post",

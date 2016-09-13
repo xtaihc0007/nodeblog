@@ -91,12 +91,12 @@ router.get('/logout',function (req, res, next) {
 
 
 passport.serializeUser(function (user, done) {
-  done(null,user._id);
+  done(null,user);
 });
 
-passport.deserializeUser(function (id, done) {
+passport.deserializeUser(function (user, done) {
   var users= db.get('users');
-  users.findById(id,function (err, user) {
+  users.findById(user._id,function (err, user) {
     done(err,user);
   });
 });
