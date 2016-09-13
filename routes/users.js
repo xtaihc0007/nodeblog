@@ -12,6 +12,7 @@ router.get('/login', function(req, res, next) {
 });
 
 router.post('/login',passport.authenticate('local',{failureRedirect:'/users/login',failureFlash:true}),function (req, res, next) {
+  req.session.user = req.user;
   req.flash('success','you are now logged in');
   res.redirect('/');
 
@@ -63,6 +64,7 @@ router.post('/register',function (req, res, next) {
               }else {
 
                 passport.authenticate('local')(req, res, function () {
+                  req.session.user=user;
                   req.flash('success','User register is successed and logined.');
                   res.location('/');
                   res.redirect('/');

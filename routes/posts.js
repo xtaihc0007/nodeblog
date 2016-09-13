@@ -26,11 +26,12 @@ router.get('/add', function(req, res, next) {
 
     var categories= db.get('categories');
     categories.find({},{},function (err, categories) {
-        console.log(categories);
+        console.log(req.session.user);
+        console.log(req.user);
         res.render('addpost',{
             'title':"add post",
             'categories':categories,
-            'user':req.user
+            'user':req.session.user
         });
     })
 
