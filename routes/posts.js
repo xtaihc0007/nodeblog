@@ -167,9 +167,14 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                         res.send(err);
                     }else {
                         req.flash('success','post added.');
-                        res.location('/');
-                        res.redirect('/');
-                    }
+                        //res.location('/');
+                        //res.redirect('/');
+                        var db= req.db;
+                          var posts= db.get('posts');
+                          posts.find({},{sort : { date : -1 }},function (err, posts) {
+                          res.render('index', { posts: posts, user:req.user });
+                      })
+                }
             });
 
             });
