@@ -98,7 +98,6 @@ app.use(expressValidator({
 // Connect-Flash
 app.use(flash());
 app.use(function (req, res, next) {
-  app.locals.moment = require('moment');
   res.locals.messages = require('express-messages')(req, res);
   next();
 });

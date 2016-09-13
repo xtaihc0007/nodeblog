@@ -114,7 +114,7 @@ router.post('/addcomment',function (req, res, next) {
 })
 
 router.post('/add', upload.single('mainimage') ,function (req, res, next) {
-    console.log(req.body.userid);
+    console.log('user '+req.user);
     var author= req.body.author;
     var title= req.body.title;
     var category= req.body.category;
@@ -134,11 +134,12 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
     var errors= req.validationErrors();
     if(errors){
         var categories= db.get('categories');
-        categories.find({},{},function (errors, categories) {
+        categories.find({},{},function (err, categories) {
             res.render('addpost',{
                 'errors':errors,
                 'title':"add post",
-                'categories':categories
+                'categories':categories,
+                'user':req.user
             });
         });
 
@@ -152,13 +153,45 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                console.log(bs.host.primaryHost);
                 console.log(result);
                 mainimage= bs.host.primaryHost+'containernodejs/'+req.file.filename;
-                 saveNoImage(title,body,category,date,author,mainimage,req,res);
                 
+                var posts= db.get('posts');
+                posts.insert({
+                    'title':title,
+                    'body':body,
+                    'category':category,
+                    'date':date,
+                    'author':author,
+                    'mainimage':mainimage
+                },function (err,post) {
+                    if(err){
+                        res.send(err);
+                    }else {
+                        req.flash('success','post added.');
+                        res.location('/');
+                        res.redirect('/');
+                    }
+            });
 
             });
         }else{
                 mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
-                 saveNoImage(title,body,category,date,author,mainimage,req,res);
+                var posts= db.get('posts');
+                posts.insert({
+                    'title':title,
+                    'body':body,
+                    'category':category,
+                    'date':date,
+                    'author':author,
+                    'mainimage':mainimage
+                },function (err,post) {
+                    if(err){
+                        res.send(err);
+                    }else {
+                        req.flash('success','post added.');
+                        res.location('/');
+                        res.redirect('/');
+                    }
+                });
 
         }
        
@@ -167,7 +200,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
     }
 })
 
-function saveNoImage(title,body,category,date,author,mainimage,req,res)
+function saveNoImage(title,body,category,date,author,mainimage,req,res,next)
 {
     var posts= db.get('posts');
             posts.insert({
