@@ -152,8 +152,8 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
            
             bs.createBlockBlobFromLocalFile ('containernodejs', req.file.filename, req.file.path, function(error, result, response){
             if(error) throw error;
-               console.log(bs.host.primaryHost);
-                console.log(result);
+            });
+
                 mainimage= bs.host.primaryHost+'containernodejs/'+req.file.filename;
                 
                 var posts= db.get('posts');
@@ -168,6 +168,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                     if(err){
                         res.send(err);
                     }else {
+                        console.log('current user: '+req.user);
                         req.flash('success','post added.');
                         res.location('/');
                         res.redirect('/');
@@ -175,7 +176,6 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                 }
             });
 
-            });
         }else{
                 mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
                 var posts= db.get('posts');

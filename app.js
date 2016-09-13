@@ -69,28 +69,6 @@ app.use(expressValidator({
       msg   : msg,
       value : value
     };
-  },
-  customValidators: {
-    isUsernameAvailable: function(username) {
-      return new Promise(function(resolve, reject) {
-        var users = db.get('users');
-        Users.findOne({username: username}, {}, function (err, user) {
-          if (err) throw err;
-          if (user) {
-            console.log(user);
-            resolve(user);
-          } else {
-            reject(user);
-          }
-        }).catch(function (error) {
-          if (error) {
-            reject(error);
-          }
-        });
-
-      });
-
-    }
   }
 }));
 
