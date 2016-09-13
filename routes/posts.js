@@ -155,7 +155,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
             //});
 
                 //mainimage= bs.host.primaryHost+'containernodejs/'+req.file.filename;
-                mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
+                 mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
                 var posts= db.get('posts');
                 posts.insert({
                     'title':title,
@@ -168,13 +168,11 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                     if(err){
                         res.send(err);
                     }else {
-                        console.log('current user: '+req.user);
                         req.flash('success','post added.');
                         res.location('/');
                         res.redirect('/');
-                       
-                }
-            });
+                    }
+                });
 
         }else{
                 mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
