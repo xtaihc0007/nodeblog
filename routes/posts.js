@@ -1,25 +1,25 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-var upload = multer({ dest: './public/images' });
+var upload = multer({ dest: './uploads' });
 var mongo = require('mongodb');
 var db = require('monk')('botest1883.cloudapp.net/nodeblog');
 var bcrypt= require('bcryptjs');
 var azure = require('azure-storage');
 
 
-// var multer = require('multer');
+var multer = require('multer');
 
-// var storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, './public/images')
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + '.jpg') //Appending .jpg
-//   }
-// })
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/images')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '.jpg') //Appending .jpg
+  }
+})
 
-// var upload = multer({ storage: storage });
+var upload = multer({ storage: storage });
 
 /* GET users listing. */
 router.get('/add', function(req, res, next) {
@@ -146,35 +146,37 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
         });
 
     }else {
-        console.log(req.file);
+        
         var bs = azure.createBlobService('storage0009','kuGlOb5PsLB90b2wJkqIHqKpT0+nIkbbp7pIlx6x5w4lsbmZU+Tz1lsl0Mi1lqwIe+FHufO/tpZTNyCFRPgvaA==');
-        //if(req.file){
+        if(req.file){
            
-           // bs.createBlockBlobFromLocalFile ('containernodejs', req.file.filename, req.file.path, function(error, result, response){
-           // if(error) throw error;
-            //});
+            bs.createBlockBlobFromLocalFile ('containernodejs', req.file.filename, req.file.path, function(error, result, response){
+            if(error) throw error;
+               console.log(bs.host.primaryHost);
+                console.log(result);
+                mainimage= bs.host.primaryHost+'containernodejs/'+req.file.filename;
+                
+                var posts= db.get('posts');
+                posts.insert({
+                    'title':title,
+                    'body':body,
+                    'category':category,
+                    'date':date,
+                    'author':author,
+                    'mainimage':mainimage
+                },function (err,post) {
+                    if(err){
+                        res.send(err);
+                    }else {
+                        req.flash('success','post added.');
+                        res.location('/');
+                        res.redirect('/');
+                       
+                }
+            });
 
-                //mainimage= bs.host.primaryHost+'containernodejs/'+req.file.filename;
-                // mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
-               // var posts= db.get('posts');
-               // posts.insert({
-                //    'title':title,
-               //     'body':body,
-               //     'category':category,
-               //     'date':date,
-               //     'author':author,
-               //     'mainimage':mainimage
-               // },function (err,post) {
-                //    if(err){
-                //        res.send(err);
-               //     }else {
-               //         req.flash('success','post added.');
-                //        res.location('/');
-                //        res.redirect('/');
-               //     }
-               // });
-
-        //}else{
+            });
+        }else{
                 mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
                 var posts= db.get('posts');
                 posts.insert({
@@ -194,7 +196,7 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
                     }
                 });
 
-       // }
+        }
        
        
         
