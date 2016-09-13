@@ -29,7 +29,8 @@ router.get('/add', function(req, res, next) {
         console.log(categories);
         res.render('addpost',{
             'title':"add post",
-            'categories':categories
+            'categories':categories,
+            'user':req.user
         });
     })
 
