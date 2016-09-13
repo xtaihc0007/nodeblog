@@ -150,12 +150,12 @@ router.post('/add', upload.single('mainimage') ,function (req, res, next) {
         var bs = azure.createBlobService('storage0009','kuGlOb5PsLB90b2wJkqIHqKpT0+nIkbbp7pIlx6x5w4lsbmZU+Tz1lsl0Mi1lqwIe+FHufO/tpZTNyCFRPgvaA==');
         if(req.file){
            
-            bs.createBlockBlobFromLocalFile ('containernodejs', req.file.filename, req.file.path, function(error, result, response){
-            if(error) throw error;
-            });
+           // bs.createBlockBlobFromLocalFile ('containernodejs', req.file.filename, req.file.path, function(error, result, response){
+           // if(error) throw error;
+            //});
 
-                mainimage= bs.host.primaryHost+'containernodejs/'+req.file.filename;
-                
+                //mainimage= bs.host.primaryHost+'containernodejs/'+req.file.filename;
+                mainimage= bs.host.primaryHost+'containernodejs/1473721472976.jpg';
                 var posts= db.get('posts');
                 posts.insert({
                     'title':title,
